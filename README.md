@@ -2,6 +2,8 @@
 - 本系统为有尝服务,使用前需要先开通代理账号，如有需要，请联系QQ:`250915790`
 - SAAS平台地址：`应用端：http://crm.aiicall.com` 、`管理端：http://boss.aiicall.com`  （暂定）
 - 目的：配合平台处理 NLP系统 与 任意多个FreeSwitch 服务通信的交互和数据缓存,实现灵活搭建和集群功能
+# 当前状态，开发中...
+- 预计 V1.0.0  为第一个发布版
 
 # 环境要求
 - 系统：Linux
@@ -38,7 +40,7 @@
     ```bash
     $ php artisan ivr:registry
     ```
-    成功显示 ：IVR Node registration successful
+    成功显示 ：`注册成功 IVR Node registration successful`
     
 1. 登录 `管理端`，查收系统捆绑成功的通知信息
 1. 在根目录 `.env` 文件中配置数据库连接信息，如果不存在 参考 `.env.example` 文件 复制一个 

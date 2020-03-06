@@ -134,8 +134,12 @@ class IvrCommand extends HyperfCommand
         if ($data) {
             $key = Arr::get($data, 'app_key');
             $secret = Arr::get($data, 'app_secret');
-            if($key && $secret){
-                $this->buildKeySecret($key, $secret);
+            if ($key && $secret) {
+                if ($this->buildKeySecret($key, $secret)) {
+                    $this->comment('注册成功 ' . Arr::get($body, 'message'));
+                } else {
+                    $this->comment('注册失败');
+                }
                 return;
             }
         }
@@ -146,11 +150,11 @@ class IvrCommand extends HyperfCommand
      * 生成系统密钥对
      * @param $key
      * @param $secret
+     * @return int
      * @throws ExitException
      */
     private function buildKeySecret($key, $secret)
     {
-
         $dir = BASE_PATH . '/runtime';
         if (!is_dir($dir) && !mkdir($dir)) {
             $this->error('文件夹[' . $dir . ']创建失败');
@@ -162,12 +166,7 @@ class IvrCommand extends HyperfCommand
 KEY={$key}
 SECRET={$secret}
 eof;
-        $len = Coroutine::writeFile($file, $content);
-        if ($len) {
-            $this->comment('注册成功');
-        } else {
-            $this->comment('注册失败');
-        }
+        return Coroutine::writeFile($file, $content);
 
     }
 
