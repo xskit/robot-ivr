@@ -6,7 +6,7 @@
 # 环境要求
 - 系统：Linux
 - PHP >= 7.1.3
-- Swoole >= 4.x 
+- Swoole >= 4.4 , 并关闭了 `Short Name` 
 - FreeSwitch
 
 # 部署说明
@@ -27,19 +27,33 @@
     $ cp .env.example .env
     ```
     
-1. **登录 `http://boss.aiicall.com`  后，点击 `系统设置` -> `IVR 节点授权` -> `新建 新令牌`，获取授权令牌后 复制到该项目根目录 `.license` 文件中**
+1. **登录 `http://boss.aiicall.com`  后，点击 `系统设置` -> `IVR 节点授权` -> `新建 新令牌`，获取授权令牌后 复制凭证写入到该项目根目录 `.license` 文件中**
+
+1. 执行凭证验证命令
+    ```base
+    $ php artisan ivr:license
+    ```
 
 1. 注册需要的信息 到  `平台服务端` 进行服务捆绑，信息按命令提示填写准确，否则可能会捆绑失败
     ```bash
-    $ php bin/artisan ivr:registry
+    $ php artisan ivr:registry
     ```
+    成功显示 ：IVR Node registration successful
     
 1. 登录 `管理端`，查收系统捆绑成功的通知信息
-   
+1. 在根目录 `.env` 文件中配置数据库连接信息，如果不存在 参考 `.env.example` 文件 复制一个 
+
+1. 迁移数据库
+    ```shell
+     $ php artisan migrate
+    ```
+  
 1. 启动服务
    
     ```shell
-    $ php bin/artisan rpc:start -d
+    $ php artisan start
     ```
+    
+- 部署完成
 1. 在 `管理端` 日常的管理控制 
 1. 在 `应用端` 功能的使用控制

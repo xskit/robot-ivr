@@ -1,23 +1,28 @@
 <?php
+
+declare(strict_types=1);
 /**
- * This file is part of Swoft.
+ * This file is part of Hyperf.
  *
- * @link     https://swoft.org
- * @document https://swoft.org/docs
- * @contact  group@swoft.org
- * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
+ * @link     https://www.hyperf.io
+ * @document https://doc.hyperf.io
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
  */
-use SwoftTest\Testing\TestApplication;
 
-$baseDir = dirname(__DIR__);
-$vendor  = dirname(__DIR__) . '/vendor';
+ini_set('display_errors', 'on');
+ini_set('display_startup_errors', 'on');
 
-/** @var \Composer\Autoload\ClassLoader $loader */
-$loader = require dirname(__DIR__) . '/vendor/autoload.php';
-$loader->addPsr4('SwoftTest\\Testing\\', $vendor . '/swoft/framework/test/testing/');
+error_reporting(E_ALL);
+date_default_timezone_set('Asia/Shanghai');
 
-$application = new TestApplication([
-    'basePath' => $baseDir,
-]);
-$application->setBeanFile($baseDir . '/app/bean.php');
-$application->run();
+! defined('BASE_PATH') && define('BASE_PATH', dirname(__DIR__, 1));
+! defined('SWOOLE_HOOK_FLAGS') && define('SWOOLE_HOOK_FLAGS', SWOOLE_HOOK_ALL);
+
+Swoole\Runtime::enableCoroutine(true);
+
+require BASE_PATH . '/vendor/autoload.php';
+
+$container = require BASE_PATH . '/config/container.php';
+
+$container->get(Hyperf\Contract\ApplicationInterface::class);
